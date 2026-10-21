@@ -386,8 +386,8 @@ main :focus-visible { outline-color: var(--atlantico); }
 
 /* Maqueta 3D */
 .maqueta-sec { padding-block: clamp(24px, 4vw, 48px) clamp(48px, 7vw, 88px); }
-.maqueta { position: relative; height: min(72svh, 640px); min-height: 380px; border-radius: var(--r-m); overflow: hidden; background: #1c2a3a; touch-action: none; user-select: none; -webkit-user-select: none; }
-.maqueta canvas { width: 100%; height: 100%; display: block; cursor: grab; touch-action: none; }
+.maqueta { position: relative; height: min(72svh, 640px); min-height: 380px; border-radius: var(--r-m); overflow: hidden; background: #1c2a3a; touch-action: pan-y; user-select: none; -webkit-user-select: none; }
+.maqueta canvas { width: 100%; height: 100%; display: block; cursor: grab; touch-action: pan-y; -webkit-touch-callout: none; -webkit-tap-highlight-color: transparent; }
 .maqueta canvas:active { cursor: grabbing; }
 .maqueta canvas:focus-visible { outline: 3px solid var(--bola); outline-offset: -3px; }
 .maqueta__etiquetas { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }

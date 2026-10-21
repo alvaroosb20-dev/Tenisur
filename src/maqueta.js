@@ -336,8 +336,8 @@
     pedirFrame();
   }
   function limitar() {
-    cam.pitch = Math.max(0.1, Math.min(1.48, cam.pitch));
-    cam.dist = Math.max(10, Math.min(190, cam.dist));
+    cam.pitch = Math.max(0.3, Math.min(1.42, cam.pitch));
+    cam.dist = Math.max(14, Math.min(150, cam.dist));
     cam.t[0] = Math.max(-45, Math.min(45, cam.t[0])); cam.t[2] = Math.max(-45, Math.min(45, cam.t[2]));
   }
 
@@ -460,6 +460,7 @@
     } else if (autoGiro && t - ultimaInteraccion > 3000) {
       cam.yaw += 0.0011;
     }
+    sano();
     var C = cielo(), B = base();
 
     var g = ctx.createLinearGradient(0, 0, 0, H);
@@ -542,36 +543,70 @@
   }
 
   /* ================= controles ================= */
-  var punteros = {}, pinchIni = null;
+  // Ratón: arrastrar gira e inclina, rueda acerca, Mayús/botón derecho desplaza.
+  // Táctil: un dedo a los lados gira (arriba/abajo sigue desplazando la página),
+  //         dos dedos: pellizcar acerca y moverlos arriba/abajo inclina.
   function tocar() { ultimaInteraccion = performance.now(); ultimaInteraccionReal = true; autoGiro = false; anim = null; }
+  function sano() {
+    if (![cam.yaw, cam.pitch, cam.dist, cam.t[0], cam.t[1], cam.t[2]].every(isFinite)) {
+      cam.yaw = INICIAL.yaw; cam.pitch = INICIAL.pitch; cam.dist = INICIAL.dist; cam.t = INICIAL.t.slice();
+    }
+  }
+  var raton = null;
   canvas.addEventListener("pointerdown", function (e) {
-    tocar();
+    if (e.pointerType === "touch") return;
+    tocar(); raton = [e.clientX, e.clientY];
     try { canvas.setPointerCapture(e.pointerId); } catch (err) { /* sin captura */ }
-    punteros[e.pointerId] = [e.clientX, e.clientY];
-    var ids = Object.keys(punteros);
-    if (ids.length === 2) { var a = punteros[ids[0]], b = punteros[ids[1]]; pinchIni = { d: Math.hypot(a[0] - b[0], a[1] - b[1]), dist: cam.dist }; }
   });
   canvas.addEventListener("pointermove", function (e) {
-    if (!punteros[e.pointerId]) return;
-    var prev = punteros[e.pointerId], ids = Object.keys(punteros);
-    punteros[e.pointerId] = [e.clientX, e.clientY];
-    if (ids.length === 1) {
-      if (e.shiftKey || e.buttons === 2) {
-        var B = base(), k = cam.dist / B.fl, dx = (e.clientX - prev[0]) * k, dz = (e.clientY - prev[1]) * k, fx = norm([B.f[0], 0, B.f[2]]);
-        cam.t = [cam.t[0] - B.r[0] * dx + fx[0] * dz, 0, cam.t[2] - B.r[2] * dx + fx[2] * dz];
-      } else {
-        cam.yaw -= (e.clientX - prev[0]) * 0.008;
-        cam.pitch += (e.clientY - prev[1]) * 0.006;
-      }
-    } else if (ids.length === 2 && pinchIni) {
-      var a = punteros[ids[0]], b = punteros[ids[1]], d = Math.hypot(a[0] - b[0], a[1] - b[1]);
-      cam.dist = pinchIni.dist * pinchIni.d / Math.max(10, d);
+    if (e.pointerType === "touch" || !raton) return;
+    var dx = e.clientX - raton[0], dy = e.clientY - raton[1];
+    raton = [e.clientX, e.clientY];
+    if (e.shiftKey || e.buttons === 2) {
+      var B = base(), k = cam.dist / B.fl, fx = norm([B.f[0], 0, B.f[2]]);
+      cam.t = [cam.t[0] - B.r[0] * dx * k + fx[0] * dy * k, 0, cam.t[2] - B.r[2] * dx * k + fx[2] * dy * k];
+    } else {
+      cam.yaw -= dx * 0.008;
+      cam.pitch += dy * 0.006;
     }
-    limitar(); pedirFrame();
+    limitar(); sano(); pedirFrame();
   });
-  function soltar(e) { delete punteros[e.pointerId]; if (Object.keys(punteros).length < 2) pinchIni = null; }
-  canvas.addEventListener("pointerup", soltar);
-  canvas.addEventListener("pointercancel", soltar);
+  function soltarRaton(e) { if (e.pointerType !== "touch") raton = null; }
+  canvas.addEventListener("pointerup", soltarRaton);
+  canvas.addEventListener("pointercancel", soltarRaton);
+
+  var toque = null;
+  function leerToques(t) {
+    if (t.length === 1) return { n: 1, x: t[0].clientX, y: t[0].clientY };
+    var a = t[0], b = t[1];
+    return { n: 2, x: (a.clientX + b.clientX) / 2, y: (a.clientY + b.clientY) / 2, d: Math.max(1, Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY)) };
+  }
+  canvas.addEventListener("touchstart", function (e) {
+    tocar();
+    toque = leerToques(e.touches);
+    if (toque.n === 2) toque.dist0 = cam.dist, toque.d0 = toque.d;
+  }, { passive: true });
+  canvas.addEventListener("touchmove", function (e) {
+    if (!toque || !e.touches.length) return;
+    var a = leerToques(e.touches);
+    if (a.n !== toque.n) { toque = a; if (a.n === 2) { toque.dist0 = cam.dist; toque.d0 = a.d; } return; }
+    if (a.n === 1) {
+      cam.yaw -= (a.x - toque.x) * 0.009;
+    } else {
+      e.preventDefault();
+      cam.dist = toque.dist0 * toque.d0 / a.d;
+      cam.pitch += (a.y - toque.y) * 0.006;
+    }
+    toque.x = a.x; toque.y = a.y;
+    limitar(); sano(); pedirFrame();
+  }, { passive: false });
+  function finToque(e) {
+    if (!e.touches.length) { toque = null; return; }
+    toque = leerToques(e.touches);
+    if (toque.n === 2) { toque.dist0 = cam.dist; toque.d0 = toque.d; }
+  }
+  canvas.addEventListener("touchend", finToque);
+  canvas.addEventListener("touchcancel", finToque);
   canvas.addEventListener("contextmenu", function (e) { e.preventDefault(); });
   canvas.addEventListener("wheel", function (e) { e.preventDefault(); tocar(); cam.dist *= Math.exp(e.deltaY * 0.0012); limitar(); pedirFrame(); }, { passive: false });
   canvas.addEventListener("keydown", function (e) {
@@ -582,6 +617,9 @@
   raiz.querySelector("[data-zoom-mas]").addEventListener("click", function () { tocar(); cam.dist *= 0.8; limitar(); pedirFrame(); });
   raiz.querySelector("[data-zoom-menos]").addEventListener("click", function () { tocar(); cam.dist *= 1.25; limitar(); pedirFrame(); });
   raiz.querySelector("[data-reiniciar]").addEventListener("click", function () { volarA(INICIAL); });
+  raiz.querySelector("[data-inclinar-mas]").addEventListener("click", function () { tocar(); cam.pitch += 0.15; limitar(); pedirFrame(); });
+  raiz.querySelector("[data-inclinar-menos]").addEventListener("click", function () { tocar(); cam.pitch -= 0.15; limitar(); pedirFrame(); });
+  raiz.__cam = cam;
 
   window.addEventListener("resize", tam);
   document.addEventListener("visibilitychange", pedirFrame);

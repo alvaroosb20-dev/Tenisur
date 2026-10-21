@@ -769,8 +769,10 @@ ${visita()}`,
         <button type="button" aria-label="${L("Acercar", "Zoom in")}" data-zoom-mas>+</button>
         <button type="button" aria-label="${L("Alejar", "Zoom out")}" data-zoom-menos>−</button>
         <button type="button" aria-label="${L("Vista inicial", "Reset view")}" data-reiniciar>⟲</button>
+        <button type="button" aria-label="${L("Ver más desde arriba", "View from higher up")}" data-inclinar-mas>▲</button>
+        <button type="button" aria-label="${L("Ver más de lado", "View from lower down")}" data-inclinar-menos>▼</button>
       </div>
-      <p class="maqueta__ayuda" aria-hidden="true">${L("Arrastra para girar · pellizca para acercar", "Drag to rotate · pinch to zoom")}</p>
+      <p class="maqueta__ayuda" aria-hidden="true">${L("Desliza a los lados para girar · pellizca para acercar", "Swipe sideways to rotate · pinch to zoom")}</p>
     </div>
     <div class="maqueta__hora">
       <label for="hora">${L("Hora del día", "Time of day")}: <strong data-hora-txt></strong></label>
