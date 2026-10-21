@@ -150,6 +150,17 @@ main :focus-visible { outline-color: var(--atlantico); }
   .menu-btn { display: inline-flex; align-items: center; justify-content: center; }
 }
 
+/* Selector de idioma */
+.idioma { display: inline-flex; padding: 3px; border-radius: 999px; background: var(--cal); border: 1px solid var(--borde); flex: none; }
+.idioma a {
+  min-width: 40px; min-height: 36px; padding: 0 10px; border-radius: 999px;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: var(--t-xs); font-weight: 700; letter-spacing: .04em; text-decoration: none; color: var(--texto-suave);
+}
+.idioma a:hover { color: var(--texto); }
+.idioma a[aria-current="true"] { background: var(--basalto); color: var(--blanco); }
+@media (max-width: 980px) { .idioma { margin-left: auto; } .menu-btn { margin-left: 4px; } }
+
 /* Menú móvil */
 .panel {
   position: fixed; inset: 0; z-index: 60;

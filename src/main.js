@@ -1,6 +1,20 @@
 /* Centro Deportivo Tenisur — interacción (sin dependencias) */
 (function () {
   "use strict";
+  var EN = (document.documentElement.lang || "es").slice(0, 2) === "en";
+  var T = EN ? {
+    abierto: "Open now · closes at ", abreHoy: "Closed · opens today at ", abreMan: "Closed · opens tomorrow at ",
+    de: " of ", nombre: "Enter your name.", tel: "Enter a phone number with at least 9 digits.",
+    priv: "Accept the privacy policy to continue.", revisa: "Check the fields marked in red.",
+    hola: "Hi, I'm ", llamad: ". Could you call me on ", mejor: " (best ", motivo: ". Reason: ",
+    mapa: "Map: Centro Deportivo Tenisur, Avenida Austria 9, Adeje"
+  } : {
+    abierto: "Abierto ahora · cierra a las ", abreHoy: "Cerrado · abre hoy a las ", abreMan: "Cerrado · abre mañana a las ",
+    de: " de ", nombre: "Escribe tu nombre.", tel: "Escribe un teléfono de al menos 9 cifras.",
+    priv: "Acepta la política de privacidad para continuar.", revisa: "Revisa los campos marcados en rojo.",
+    hola: "Hola, soy ", llamad: ". Me gustaría que me llamarais al ", mejor: " (mejor ", motivo: ". Motivo: ",
+    mapa: "Mapa: Centro Deportivo Tenisur, Avenida Austria 9, Adeje"
+  };
 
   /* ---------- Menú móvil ---------- */
   var panel = document.getElementById("panel");
@@ -42,7 +56,6 @@
   /* ---------- Abierto ahora (hora de Canarias) ---------- */
   // Horario publicado: L-V 08:30-22:30 · S-D 08:30-15:30
   var HORARIO = { 1: [510, 1350], 2: [510, 1350], 3: [510, 1350], 4: [510, 1350], 5: [510, 1350], 6: [510, 930], 0: [510, 930] };
-  var DIAS = ["domingo", "lunes", "martes", "miércoles", "jueves", "viernes", "sábado"];
 
   function ahoraCanarias() {
     try {
@@ -65,12 +78,12 @@
   var texto, abierto = false;
   if (a.min >= hoy[0] && a.min < hoy[1]) {
     abierto = true;
-    texto = "Abierto ahora · cierra a las " + hhmm(hoy[1]);
+    texto = T.abierto + hhmm(hoy[1]);
   } else if (a.min < hoy[0]) {
-    texto = "Cerrado · abre hoy a las " + hhmm(hoy[0]);
+    texto = T.abreHoy + hhmm(hoy[0]);
   } else {
     var man = (a.dia + 1) % 7;
-    texto = "Cerrado · abre mañana " + DIAS[man] + " a las " + hhmm(HORARIO[man][0]);
+    texto = T.abreMan + hhmm(HORARIO[man][0]);
   }
   document.querySelectorAll("[data-estado]").forEach(function (el) {
     el.setAttribute("data-abierto", abierto ? "si" : "no");
@@ -98,7 +111,7 @@
     var vi = visor.querySelector("img");
     vi.src = img.currentSrc || img.src;
     vi.alt = img.alt;
-    visor.querySelector("figcaption").textContent = img.alt + " (" + (actual.i + 1) + " de " + grupos[actual.g].length + ")";
+    visor.querySelector("figcaption").textContent = img.alt + " (" + (actual.i + 1) + T.de + grupos[actual.g].length + ")";
   }
   function mover(d) {
     var n = grupos[actual.g].length;
@@ -146,7 +159,7 @@
       var cont = btn.closest(".mapa");
       var ifr = document.createElement("iframe");
       ifr.src = cont.getAttribute("data-src");
-      ifr.title = "Mapa: Centro Deportivo Tenisur, Avenida Austria 9, Adeje";
+      ifr.title = T.mapa;
       ifr.loading = "lazy";
       ifr.referrerPolicy = "no-referrer-when-downgrade";
       cont.appendChild(ifr);
@@ -183,22 +196,22 @@
       var franja = (d.get("franja") || "").toString();
       var msg = (d.get("mensaje") || "").toString().trim();
       var errores = 0;
-      marcar("nombre", nombre.length < 2 ? (errores++, "Escribe tu nombre.") : "");
-      marcar("telefono", tel.replace(/\D/g, "").length < 9 ? (errores++, "Escribe un teléfono de al menos 9 cifras.") : "");
+      marcar("nombre", nombre.length < 2 ? (errores++, T.nombre) : "");
+      marcar("telefono", tel.replace(/\D/g, "").length < 9 ? (errores++, T.tel) : "");
       var priv = form.querySelector("#privacidad");
       if (!priv.checked) { errores++; priv.setAttribute("aria-invalid", "true"); } else priv.removeAttribute("aria-invalid");
       if (errores) {
         ko.textContent = errores === 1 && !priv.checked && nombre && tel.length >= 9
-          ? "Acepta la política de privacidad para continuar."
-          : "Revisa los campos marcados en rojo.";
+          ? T.priv
+          : T.revisa;
         ko.classList.add("visible");
         var primero = form.querySelector("[aria-invalid='true']");
         primero && primero.focus();
         return;
       }
-      var texto = "Hola, soy " + nombre + ". Me gustaría que me llamarais al " + tel +
-        (franja ? " (mejor " + franja.toLowerCase() + ")" : "") +
-        (motivo ? ". Motivo: " + motivo : "") +
+      var texto = T.hola + nombre + T.llamad + tel +
+        (franja ? T.mejor + franja.toLowerCase() + ")" : "") +
+        (motivo ? T.motivo + motivo : "") +
         (msg ? ". " + msg : "") + ".";
       var url = "https://wa.me/" + form.getAttribute("data-whatsapp") + "?text=" + encodeURIComponent(texto);
       var btn = form.querySelector("button[type=submit]");

@@ -9,6 +9,11 @@ Rediseño completo de centrodeportivotenisur.es (antes en Duda/QDQ). Web estáti
 
 Para editar textos, horarios o fotos: todo está en `build.mjs` (objetos `NEGOCIO`, `IMG` y cada página). Estilos en `src/styles.css`, interacción en `src/main.js`.
 
+## Idiomas
+- Español en las rutas de siempre e inglés en las mismas rutas bajo `/en` (p. ej. `/en/producto/restaurante`).
+- Selector ES / EN en la cabecera, visible también en móvil. Cada página enlaza a su versión en el otro idioma y lleva `hreflang` para Google.
+- Los textos de cada idioma están juntos en `build.mjs` con la forma `L("español", "english")`.
+
 ## Reservas (sin cambios)
 - Todos los botones «Reservar» siguen llevando a **https://tenisur.taykus.com/**, el mismo sistema que la web anterior. No se ha tocado Taykus.
 - Además, `/reservas` redirige a Taykus.
@@ -29,7 +34,7 @@ Redirecciones: `/escríbenos` → `/escribenos`, `/fotos/img/*` → `/galeria`, 
 9. Probar en un iPhone y un Android reales una vez publicada.
 
 ## Pruebas hechas
-- 19 páginas generadas, revisadas en móvil (390 px) y escritorio (1366 px): sin errores de JavaScript, sin desplazamiento horizontal, un solo `h1` por página, todas las imágenes con `alt`, sin enlaces internos rotos.
+- 38 páginas generadas (19 en español y 19 en inglés), revisadas en móvil (390 px) y escritorio (1366 px): sin errores de JavaScript, sin desplazamiento horizontal, un solo `h1` por página, todas las imágenes con `alt`, sin enlaces internos rotos.
 - Menú móvil: abre, enfoca el botón de cerrar, se cierra con Escape.
 - Formulario: muestra errores si falta algo; con datos válidos abre `wa.me/34675021499` con el mensaje.
 - Las fotos, fuentes, mapa y Taykus no se pudieron cargar en el entorno de pruebas (sin acceso a esos dominios); hay que verlos en la URL de Vercel.
