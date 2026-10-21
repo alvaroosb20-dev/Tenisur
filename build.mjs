@@ -778,9 +778,9 @@ ${visita()}`,
       <div class="maqueta__marcas" aria-hidden="true"><span>${L("Día", "Day")}</span><span>${L("Atardecer", "Sunset")}</span><span>${L("Noche", "Night")}</span></div>
     </div>
     <div class="maqueta__zonas" role="group" aria-label="${L("Ir a una zona", "Go to an area")}">
-      ${zonaBtn("tenis", L("Tenis", "Tennis"))}${zonaBtn("padel", L("Pádel", "Padel"))}${zonaBtn("squash", L("Squash", "Squash"))}${zonaBtn("gym", L("Gimnasio", "Gym"))}${zonaBtn("restaurante", L("Restaurante", "Restaurant"))}${zonaBtn("terraza", L("Terraza y kiosco", "Terrace and kiosk"))}${zonaBtn("parque", L("Parque infantil", "Playground"))}
+      ${zonaBtn("tenis", L("Tenis", "Tennis"))}${zonaBtn("padel", L("Pádel", "Padel"))}${zonaBtn("club", L("Club social y restaurante", "Clubhouse and restaurant"))}${zonaBtn("terraza", L("Terraza y kiosco", "Terrace and kiosk"))}${zonaBtn("entreno", L("Zona de entrenamiento", "Training area"))}
     </div>
-    <p class="maqueta__nota">${L("Recreación aproximada para orientarte por el club. La distribución real puede variar.", "Approximate model to help you find your way around. The real layout may differ.")}</p>
+    <p class="maqueta__nota">${L("Maqueta hecha a escala a partir de la vista aérea del club. Los colores y detalles son una recreación.", "Scale model based on an aerial view of the club. Colours and details are a recreation.")}</p>
   </div>
 </section>
 ${bloqueReserva()}`,

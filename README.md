@@ -15,9 +15,9 @@ Para editar textos, horarios o fotos: todo está en `build.mjs` (objetos `NEGOCI
 - Los textos de cada idioma están juntos en `build.mjs` con la forma `L("español", "english")`.
 
 ## Pistas en 3D
-- Página `/pistas-3d` (y `/en/pistas-3d`) con una maqueta 3D del club hecha a mano en `src/maqueta.js`, sin librerías.
+- Página `/pistas-3d` (y `/en/pistas-3d`) con una maqueta 3D del club hecha a mano en `src/maqueta.js` (con sombras según la hora), sin librerías.
 - Se gira con el dedo, se acerca pellizcando y tiene un control de hora del día (día, atardecer y noche con focos).
-- Es una recreación aproximada: la colocación de pistas y edificios es orientativa. Si el cliente quiere que coincida con la realidad, hace falta un plano o una foto aérea.
+- Distribución medida sobre la vista aérea del club (pistas, edificios, terraza, zona de entrenamiento, calles y aparcamiento a escala). La foto de satélite no se usa en la web, solo como plano de referencia.
 - Botón «Ver las pistas en 3D» en la portada y en Instalaciones.
 
 ## Reservas (sin cambios)
