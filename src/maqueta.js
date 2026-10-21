@@ -391,7 +391,10 @@
   /* ================= render ================= */
   var W = 0, H = 0, dpr = 1;
   function tam() {
-    var r = canvas.getBoundingClientRect();
+    // El tamaño se toma del contenedor, nunca del propio lienzo: así no puede crecer sin límite.
+    canvas.style.width = "100%"; canvas.style.height = "100%"; canvas.style.display = "block";
+    var r = raiz.getBoundingClientRect();
+    if (!r.width || !r.height) return;
     if (!W && r.width < r.height) { INICIAL.dist = 88; if (!anim && !ultimaInteraccionReal) cam.dist = 88; }
     dpr = Math.min(window.devicePixelRatio || 1, 2);
     W = r.width; H = r.height;
@@ -621,7 +624,8 @@
   raiz.querySelector("[data-inclinar-menos]").addEventListener("click", function () { tocar(); cam.pitch -= 0.15; limitar(); pedirFrame(); });
   raiz.__cam = cam;
 
-  window.addEventListener("resize", tam);
+  var tRes = null;
+  window.addEventListener("resize", function () { clearTimeout(tRes); tRes = setTimeout(tam, 120); });
   document.addEventListener("visibilitychange", pedirFrame);
   tam();
 })();

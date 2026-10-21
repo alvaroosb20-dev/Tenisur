@@ -1,10 +1,14 @@
 // Generador estático de la web de Centro Deportivo Tenisur (español + inglés).
 // Uso: node build.mjs  →  crea /dist con una carpeta por ruta (URLs limpias).
 // Español: mismas rutas que la web anterior en Duda. Inglés: las mismas bajo /en.
-import { mkdirSync, writeFileSync, copyFileSync, rmSync, cpSync } from "node:fs";
+import { mkdirSync, writeFileSync, copyFileSync, rmSync, cpSync, readFileSync } from "node:fs";
+import { createHash } from "node:crypto";
 import { dirname, join } from "node:path";
 
 const DIST = "dist";
+// Versión de cada recurso según su contenido: el navegador descarga siempre la última.
+const ver = (f) => createHash("md5").update(readFileSync(f)).digest("hex").slice(0, 10);
+const V = { css: ver("src/styles.css"), js: ver("src/main.js"), maqueta: ver("src/maqueta.js") };
 const SITE = "https://www.centrodeportivotenisur.es";
 
 /* ---------------- Idioma ---------------- */
@@ -267,7 +271,7 @@ ${noindex ? '<meta name="robots" content="noindex, follow">' : ""}
 <link rel="preconnect" href="https://storage.googleapis.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..900&display=swap">
 ${ruta === "/" ? '<link rel="preload" as="image" href="/img/hero-atardecer.webp" type="image/webp">' : ""}
-<link rel="stylesheet" href="/styles.css">
+<link rel="stylesheet" href="/styles.css?v=${V.css}">
 <script type="application/ld+json">${JSON.stringify(SCHEMA())}</script>
 ${migasLd}
 </head>
@@ -277,7 +281,7 @@ ${cabecera(ruta)}
 ${cuerpo}
 </main>
 ${pie()}
-<script src="/main.js" defer></script>
+<script src="/main.js?v=${V.js}" defer></script>
 ${scripts}
 </body>
 </html>
@@ -757,14 +761,14 @@ ${visita()}`,
     titulo: L("Las pistas en 3D | Centro Deportivo Tenisur", "The courts in 3D | Centro Deportivo Tenisur"),
     desc: L("Recorre en 3D las pistas de tenis, pádel y squash de Centro Deportivo Tenisur y cambia la hora del día: de día, al atardecer y de noche con los focos.", "Explore the Tenisur tennis, padel and squash courts in 3D and change the time of day: daytime, sunset and night with floodlights."),
     migas: mig3d,
-    scripts: '<script src="/maqueta.js" defer></script>',
+    scripts: `<script src="/maqueta.js?v=${V.maqueta}" defer></script>`,
     cuerpo: `${cabPagina({ h1: L("Las pistas en 3D", "The courts in 3D"), sub: L("Gira el club con el dedo, acércate a cada zona y cambia la hora del día.", "Spin the club with your finger, zoom into each area and change the time of day."), migas: mig3d })}
 <section class="seccion seccion--oscura maqueta-sec" aria-labelledby="t-maqueta">
   <div class="contenedor">
     <h2 id="t-maqueta" class="sr-only">${L("Maqueta interactiva del club", "Interactive model of the club")}</h2>
-    <div class="maqueta" data-maqueta>
+    <div class="maqueta" data-maqueta style="position:relative;overflow:hidden;max-width:100%">
       <canvas tabindex="0" role="img" aria-label="${L("Maqueta 3D del Centro Deportivo Tenisur. Arrastra para girar, pellizca o usa los botones para acercar.", "3D model of Centro Deportivo Tenisur. Drag to rotate, pinch or use the buttons to zoom.")}"></canvas>
-      <div class="maqueta__etiquetas" data-etiquetas></div>
+      <div class="maqueta__etiquetas" data-etiquetas style="position:absolute;inset:0;overflow:hidden;pointer-events:none"></div>
       <div class="maqueta__ctrl">
         <button type="button" aria-label="${L("Acercar", "Zoom in")}" data-zoom-mas>+</button>
         <button type="button" aria-label="${L("Alejar", "Zoom out")}" data-zoom-menos>−</button>
