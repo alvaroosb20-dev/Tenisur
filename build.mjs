@@ -72,7 +72,6 @@ const I = {
   fb: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M14 8.5V6.8c0-.8.5-1 .9-1H17V2.1L14.1 2C10.9 2 10.2 4.4 10.2 6v2.5H8V12h2.2v10H14V12h2.7l.4-3.5z"/></svg>',
   pesa: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.5 6.5v11M17.5 6.5v11M3.5 9v6M20.5 9v6M6.5 12h11"/></svg>',
   circuito: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12a8 8 0 0 1 14.9-4M20 12a8 8 0 0 1-14.9 4"/><path d="M19 3v5h-5M5 21v-5h5"/></svg>',
-  pingpong: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9.5" cy="9.5" r="6"/><path d="M13.7 13.7l6 6"/><circle cx="19" cy="5" r="1.6"/></svg>',
   artes: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9h16M7 9l-2 12M17 9l2 12M9 9v4a3 3 0 0 0 6 0V9M12 3v6"/></svg>',
   ninos: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 21V9l8-6 8 6v12"/><path d="M9 21v-6h6v6M4 13h16"/></svg>',
   tienda: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8h14l-1 13H6L5 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>',
@@ -353,14 +352,13 @@ const filaDeporte = (href, num, h, p, ir, foto) =>
 const deportes = (fotos) => `<div class="deportes">
   ${filaDeporte("/es/pista-de-tenis-costa-adeje", 3, L("Pistas de tenis", "Tennis courts"), L("Pistas descubiertas para individuales o dobles.", "Outdoor courts for singles or doubles."), L("Ver tenis", "See tennis"), fotos[0])}
   ${filaDeporte("/es/pistas-de-padel-costa-adeje", 3, L("Pistas de pádel", "Padel courts"), L("Pistas descubiertas y acristaladas.", "Outdoor glass-walled courts."), L("Ver pádel", "See padel"), fotos[1])}
-  ${filaDeporte("/es/pistas-squash-costa-adeje", 2, L("Pistas de squash y racquetball", "Squash and racquetball courts"), L("Para partidos rápidos e intensos, también con ping pong.", "Fast, intense matches, plus table tennis."), L("Ver squash", "See squash"), fotos[2])}
+  ${filaDeporte("/es/pistas-squash-costa-adeje", 2, L("Pistas de squash y racquetball", "Squash and racquetball courts"), L("Para partidos rápidos e intensos.", "For fast, intense matches."), L("Ver squash", "See squash"), fotos[2])}
 </div>`;
 
 const extrasLista = () => ({
   gym: `<div class="extra"><a href="${u("/es/ofertas-de-gimnasios-costa-adeje")}">${I.pesa}<h3>${L("Gimnasio y crossfit", "Gym and CrossFit")}</h3></a><p>${L("Zona de cardio y pesas, y entrenamientos de crossfit en grupo.", "Cardio and weights area, plus group CrossFit sessions.")}</p></div>`,
   circuito: `<div class="extra">${I.circuito}<h3>${L("Circuito", "Circuit")}</h3><p>${L("Circuito de entrenamiento dentro de las instalaciones.", "A training circuit inside the centre.")}</p></div>`,
   artes: `<div class="extra">${I.artes}<h3>${L("Club de artes marciales", "Martial arts club")}</h3><p>${L("El club de artes marciales entrena en el centro.", "The martial arts club trains at the centre.")}</p></div>`,
-  ping: `<div class="extra">${I.pingpong}<h3>${L("Ping pong", "Table tennis")}</h3><p>${L("Mesas para una partida entre turno y turno.", "Tables for a quick game between sessions.")}</p></div>`,
   ninos: `<div class="extra">${I.ninos}<h3>${L("Parque infantil", "Children's playground")}</h3><p>${L("Los peques juegan mientras los mayores entrenan.", "Kids play while the grown-ups train.")}</p></div>`,
   tienda: `<div class="extra">${I.tienda}<h3>${L("Artículos para gym", "Gym equipment")}</h3><p>${L("Material deportivo disponible en el centro.", "Sports gear available at the centre.")}</p></div>`,
 });
@@ -620,11 +618,11 @@ ${visita(true)}`,
     ruta: "/es/pistas-squash-costa-adeje",
     h1: L("Pistas de squash en Costa Adeje", "Squash courts in Costa Adeje"),
     titulo: L("Pistas de squash en Costa Adeje | Centro Deportivo Tenisur", "Squash courts in Costa Adeje | Centro Deportivo Tenisur"),
-    desc: L("Dos pistas de squash y racquetball en Costa Adeje, además de ping pong. Reserva en Centro Deportivo Tenisur.", "Two squash and racquetball courts in Costa Adeje, plus table tennis. Book at Centro Deportivo Tenisur."),
-    sub: L("Dos pistas de squash y racquetball, y ping pong.", "Two squash and racquetball courts, plus table tennis."),
+    desc: L("Dos pistas de squash y racquetball en Costa Adeje. Reserva en Centro Deportivo Tenisur.", "Two squash and racquetball courts in Costa Adeje. Book at Centro Deportivo Tenisur."),
+    sub: L("Dos pistas de squash y racquetball.", "Two squash and racquetball courts."),
     foto: IMG.centro,
-    intro: { h: L("Squash y racquetball", "Squash and racquetball"), p: [L("En Tenisur tienes dos pistas de squash y racquetball para partidos rápidos e intensos.", "Tenisur has two squash and racquetball courts for fast, intense matches."), L("También puedes echar una partida de ping pong.", "You can also play a game of table tennis.")] },
-    puntos: [L("2 pistas de squash y racquetball", "2 squash and racquetball courts"), L("Ping pong", "Table tennis"), L("Reserva online o por teléfono", "Book online or by phone")],
+    intro: { h: L("Squash y racquetball", "Squash and racquetball"), p: [L("En Tenisur tienes dos pistas de squash y racquetball para partidos rápidos e intensos.", "Tenisur has two squash and racquetball courts for fast, intense matches."), L("Después del partido, el restaurante y la terraza están a unos pasos.", "After the match, the restaurant and terrace are just a few steps away.")] },
+    puntos: [L("2 pistas de squash y racquetball", "2 squash and racquetball courts"), L("Restaurante y terraza al lado", "Restaurant and terrace next door"), L("Reserva online o por teléfono", "Book online or by phone")],
     fotos: [IMG.centro, IMG.instalaciones, IMG.bar, IMG.parque],
     cta: L("Reservar pista de squash", "Book a squash court"),
   });
@@ -682,7 +680,7 @@ ${bloqueReserva()}`,
   <div class="duo">
     <div class="duo__txt">
       <h2>${L("Qué es Tenisur", "What is Tenisur")}</h2>
-      <p>${L("Centro Deportivo Tenisur está en Costa Adeje, en el sur de Tenerife. Tiene instalaciones para tenis, pádel, squash, racquetball y crossfit, gimnasio, circuito y ping pong.", "Centro Deportivo Tenisur is in Costa Adeje, in the south of Tenerife. It has facilities for tennis, padel, squash, racquetball and CrossFit, plus a gym, training circuit and table tennis.")}</p>
+      <p>${L("Centro Deportivo Tenisur está en Costa Adeje, en el sur de Tenerife. Tiene instalaciones para tenis, pádel, squash, racquetball y crossfit, gimnasio y circuito.", "Centro Deportivo Tenisur is in Costa Adeje, in the south of Tenerife. It has facilities for tennis, padel, squash, racquetball and CrossFit, plus a gym and training circuit.")}</p>
       <p>${L("Fuera de la pista, el restaurante abre todos los días, y el kiosco con barbacoa, las terrazas y el parque infantil hacen que muchas familias pasen aquí la tarde.", "Off the court, the restaurant is open every day, and the kiosk with barbecue, the terraces and the playground mean many families spend the afternoon here.")}</p>
       <a class="btn btn--pista" href="${u("/producto/instalaciones-deportivas")}">${L("Ver instalaciones", "See facilities")}</a>
     </div>
