@@ -1,7 +1,7 @@
 // Generador estático de la web de Centro Deportivo Tenisur.
 // Uso: node build.mjs  →  crea /dist con una carpeta por ruta (URLs limpias,
 // las mismas rutas que la web anterior en Duda).
-import { mkdirSync, writeFileSync, copyFileSync, rmSync } from "node:fs";
+import { mkdirSync, writeFileSync, copyFileSync, rmSync, cpSync } from "node:fs";
 import { dirname, join } from "node:path";
 
 const DIST = "dist";
@@ -245,6 +245,7 @@ ${noindex ? '<meta name="robots" content="noindex, follow">' : ""}
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://storage.googleapis.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..900&display=swap">
+${ruta === "/" ? '<link rel="preload" as="image" href="/img/hero-atardecer.webp" type="image/webp">' : ""}
 <link rel="stylesheet" href="/styles.css">
 <script type="application/ld+json">${JSON.stringify(SCHEMA)}</script>
 ${migasLd}
@@ -335,7 +336,7 @@ P["/"] = pagina({
   desc: "Centro Deportivo Tenisur en Costa Adeje: pistas de tenis, pádel y squash, gimnasio, crossfit, restaurante y parque infantil. Reserva tu pista online.",
   cuerpo: `
 <section class="hero" aria-labelledby="t-hero">
-  <div class="hero__foto">${img(IMG.tenisPano, { eager: true })}</div>
+  <div class="hero__foto"><picture><source srcset="/img/hero-atardecer.webp" type="image/webp"><img src="/img/hero-atardecer.jpg" alt="Pistas de tenis y pádel de Tenisur al atardecer" width="1127" height="1396" fetchpriority="high" decoding="async"></picture></div>
   <svg class="hero__lineas" viewBox="0 0 1000 600" preserveAspectRatio="none" aria-hidden="true">
     <line class="trazo" pathLength="1" x1="0" y1="430" x2="1000" y2="430"/>
     <line class="trazo t2" pathLength="1" x1="620" y1="0" x2="620" y2="600"/>
@@ -790,6 +791,7 @@ for (const [ruta, html] of Object.entries(P)) {
 }
 copyFileSync("src/styles.css", join(DIST, "styles.css"));
 copyFileSync("src/main.js", join(DIST, "main.js"));
+cpSync("src/img", join(DIST, "img"), { recursive: true });
 writeFileSync(join(DIST, "favicon.svg"), `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="#ddf247"/><path d="M5 7c6 4 6 14 0 18M27 7c-6 4-6 14 0 18" fill="none" stroke="#0f5e52" stroke-width="2.4"/></svg>`);
 const rutas = Object.keys(P).filter((r) => r !== "/404");
 writeFileSync(join(DIST, "sitemap.xml"), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${rutas.filter((r) => !["/aviso-legal", "/politica-de-privacidad", "/politica-de-cookies", "/declaracion-de-accesibilidad"].includes(r)).map((r) => `  <url><loc>${SITE}${r === "/" ? "/" : r}</loc></url>`).join("\n")}\n</urlset>\n`);

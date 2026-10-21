@@ -201,7 +201,9 @@ main :focus-visible { outline-color: var(--atlantico); }
   color: var(--blanco); background: var(--pista-osc);
 }
 .hero__foto { position: absolute; inset: 0; z-index: -2; }
-.hero__foto img { width: 100%; height: 100%; object-fit: cover; }
+.hero__foto picture, .hero__foto img { width: 100%; height: 100%; }
+.hero__foto img { object-fit: cover; object-position: center 72%; }
+@media (max-aspect-ratio: 1/1) { .hero__foto img { object-position: center 40%; } }
 .hero::before {
   content: ""; position: absolute; inset: 0; z-index: -1;
   background:

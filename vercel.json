@@ -20,6 +20,7 @@
       { "key": "X-Frame-Options", "value": "SAMEORIGIN" },
       { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=()" }
     ] },
+    { "source": "/img/(.*)", "headers": [ { "key": "Cache-Control", "value": "public, max-age=2592000, immutable" } ] },
     { "source": "/(styles.css|main.js|favicon.svg)", "headers": [
       { "key": "Cache-Control", "value": "public, max-age=86400, must-revalidate" }
     ] }
