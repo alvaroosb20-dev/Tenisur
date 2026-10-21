@@ -380,6 +380,40 @@ main :focus-visible { outline-color: var(--atlantico); }
 .reserva-bloque__nota { font-size: var(--t-s); color: rgba(255,255,255,.75); }
 @media (max-width: 820px) { .reserva-bloque { grid-template-columns: 1fr; } }
 
+/* Botón 4D */
+.btn--4d { --bg: rgba(255,255,255,.14); --fg: var(--blanco); border-color: rgba(255,255,255,.55); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
+.btn--4d:hover { --bg: rgba(255,255,255,.24); }
+
+/* Maqueta 3D / 4D */
+.maqueta-sec { padding-block: clamp(24px, 4vw, 48px) clamp(48px, 7vw, 88px); }
+.maqueta { position: relative; height: min(72svh, 640px); min-height: 380px; border-radius: var(--r-m); overflow: hidden; background: #1c2a3a; touch-action: none; user-select: none; -webkit-user-select: none; }
+.maqueta canvas { width: 100%; height: 100%; display: block; cursor: grab; touch-action: none; }
+.maqueta canvas:active { cursor: grabbing; }
+.maqueta canvas:focus-visible { outline: 3px solid var(--bola); outline-offset: -3px; }
+.maqueta__etiquetas { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+.maqueta__etq {
+  position: absolute; left: 0; top: 0; pointer-events: auto; cursor: pointer;
+  border: 0; border-radius: 999px; padding: 6px 10px; white-space: nowrap;
+  background: rgba(24,32,30,.82); color: var(--blanco); font: 700 12px/1.1 var(--f-sans);
+  box-shadow: 0 2px 10px rgba(0,0,0,.25);
+}
+.maqueta__etq:hover, .maqueta__etq:focus-visible { background: var(--bola); color: var(--basalto); }
+.maqueta__ctrl { position: absolute; right: 12px; top: 12px; display: grid; gap: 8px; }
+.maqueta__ctrl button {
+  width: 44px; height: 44px; border-radius: 50%; border: 0; cursor: pointer;
+  background: rgba(24,32,30,.8); color: var(--blanco); font: 700 20px/1 var(--f-sans);
+}
+.maqueta__ctrl button:hover { background: var(--pista); }
+.maqueta__ayuda { position: absolute; left: 12px; bottom: 12px; margin: 0; padding: 6px 10px; border-radius: 999px; background: rgba(24,32,30,.7); font-size: var(--t-xs); color: rgba(255,255,255,.85); pointer-events: none; }
+.maqueta__hora { margin-top: 24px; display: grid; gap: 10px; max-width: 560px; }
+.maqueta__hora label { font-size: var(--t-m); }
+.maqueta__hora strong { color: var(--bola); }
+.maqueta__hora input[type=range] { width: 100%; height: 44px; accent-color: var(--bola); cursor: pointer; }
+.maqueta__marcas { display: flex; justify-content: space-between; font-size: var(--t-xs); color: rgba(255,255,255,.7); }
+.maqueta__zonas { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
+.maqueta__zonas .btn { min-height: 44px; color: var(--blanco); }
+.maqueta__nota { margin: 20px 0 0; font-size: var(--t-s); color: rgba(255,255,255,.65); }
+
 /* Visita / contacto */
 .visita { display: grid; grid-template-columns: 1fr 1.2fr; gap: clamp(24px, 4vw, 56px); }
 @media (max-width: 860px) { .visita { grid-template-columns: 1fr; } }

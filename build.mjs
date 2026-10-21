@@ -70,6 +70,7 @@ const I = {
   der: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>',
   ig: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>',
   fb: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M14 8.5V6.8c0-.8.5-1 .9-1H17V2.1L14.1 2C10.9 2 10.2 4.4 10.2 6v2.5H8V12h2.2v10H14V12h2.7l.4-3.5z"/></svg>',
+  cubo: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5l8.5 4.75v9.5L12 21.5l-8.5-4.75v-9.5z"/><path d="M3.5 7.25L12 12l8.5-4.75M12 12v9.5"/></svg>',
   pesa: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.5 6.5v11M17.5 6.5v11M3.5 9v6M20.5 9v6M6.5 12h11"/></svg>',
   circuito: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12a8 8 0 0 1 14.9-4M20 12a8 8 0 0 1-14.9 4"/><path d="M19 3v5h-5M5 21v-5h5"/></svg>',
   artes: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9h16M7 9l-2 12M17 9l2 12M9 9v4a3 3 0 0 0 6 0V9M12 3v6"/></svg>',
@@ -100,7 +101,7 @@ const NAV_MOVIL = () => [
     { href: "/producto/restaurante", txt: L("Restaurante", "Restaurant") },
     { href: "/producto/kiosco-y-barbacoa", txt: L("Kiosco y barbacoa", "Kiosk and barbecue") },
   ] },
-  { href: "/galeria", txt: L("Galería", "Gallery"), sub: [{ href: "/videos", txt: L("Vídeos", "Videos") }] },
+  { href: "/galeria", txt: L("Galería", "Gallery"), sub: [{ href: "/videos", txt: L("Vídeos", "Videos") }, { href: "/pistas-3d", txt: L("Pistas en 4D", "Courts in 4D") }] },
   { href: "/saber-mas", txt: L("Conócenos", "About us") },
   { href: "/contacto", txt: L("Contacto", "Contact") },
 ];
@@ -229,7 +230,7 @@ const SCHEMA = () => ({
   sameAs: [NEGOCIO.instagram, NEGOCIO.facebook],
 });
 
-function pagina({ ruta, titulo, desc, cuerpo, migas = null, noindex = false }) {
+function pagina({ ruta, titulo, desc, cuerpo, migas = null, noindex = false, scripts = "" }) {
   const canon = SITE + u(ruta);
   const alt = (lang) => SITE + enRuta(lang, ruta);
   const migasLd = migas
@@ -277,6 +278,7 @@ ${cuerpo}
 </main>
 ${pie()}
 <script src="/main.js" defer></script>
+${scripts}
 </body>
 </html>
 `;
@@ -388,6 +390,7 @@ function construir() {
     <div class="hero__acciones">
       <a class="btn btn--reserva btn--grande" ${extReserva}>${I.cal}${L("Reservar pista", "Book a court")}${nuevaPestana()}</a>
       <a class="btn btn--borde btn--grande" href="${NEGOCIO.telHref}">${I.tel}${L("Llamar", "Call")}</a>
+      <a class="btn btn--4d btn--grande" href="${u("/pistas-3d")}">${I.cubo}${L("Ver las pistas en 4D", "See the courts in 4D")}</a>
     </div>
   </div>
 </section>
@@ -461,7 +464,9 @@ ${visita()}
     desc: L("Tres pistas de tenis, tres de pádel, dos de squash y racquetball, circuito, crossfit y gimnasio en Costa Adeje.", "Three tennis courts, three padel courts, two squash and racquetball courts, circuit, CrossFit and gym in Costa Adeje."),
     migas: migInst,
     cuerpo: `${cabPagina({ h1: L("Instalaciones deportivas", "Sports facilities"), sub: L("Unas instalaciones donde todo el mundo encuentra su manera de hacer deporte.", "Facilities where everyone finds their own way to play sport."), foto: IMG.instalaciones, migas: migInst })}
-<section class="seccion seccion--blanca"><div class="contenedor">${deportes([IMG.tenis2, IMG.padel2, IMG.centro])}</div></section>
+<section class="seccion seccion--blanca"><div class="contenedor">
+  <p style="margin-bottom:28px"><a class="btn btn--pista btn--grande" href="${u("/pistas-3d")}">${I.cubo}${L("Ver las pistas en 4D", "See the courts in 4D")}</a></p>
+  ${deportes([IMG.tenis2, IMG.padel2, IMG.centro])}</div></section>
 <section class="seccion"><div class="contenedor">
   <div class="seccion__cab"><h2>${L("Entrenar fuera de la pista", "Training off the court")}</h2></div>
   <div class="extras">${ex.gym}${ex.circuito}${ex.artes}${ex.tienda}</div>
@@ -743,6 +748,44 @@ ${visita()}`,
 </div></section>`,
   });
 
+
+  /* MAQUETA 3D / 4D */
+  const mig3d = [{ name: L("Instalaciones", "Facilities"), href: "/producto/instalaciones-deportivas" }, { name: L("Pistas en 4D", "Courts in 4D") }];
+  const zonaBtn = (id, txt) => `<button class="btn btn--borde" type="button" data-zona="${id}">${txt}</button>`;
+  P["/pistas-3d"] = pagina({
+    ruta: "/pistas-3d",
+    titulo: L("Las pistas en 4D | Centro Deportivo Tenisur", "The courts in 4D | Centro Deportivo Tenisur"),
+    desc: L("Recorre en 3D las pistas de tenis, pádel y squash de Centro Deportivo Tenisur y cambia la hora del día: de día, al atardecer y de noche con los focos.", "Explore the Tenisur tennis, padel and squash courts in 3D and change the time of day: daytime, sunset and night with floodlights."),
+    migas: mig3d,
+    scripts: '<script src="/maqueta.js" defer></script>',
+    cuerpo: `${cabPagina({ h1: L("Las pistas en 4D", "The courts in 4D"), sub: L("Gira el club con el dedo y cambia la hora: la cuarta dimensión es el tiempo.", "Spin the club with your finger and change the hour: the fourth dimension is time."), migas: mig3d })}
+<section class="seccion seccion--oscura maqueta-sec" aria-labelledby="t-maqueta">
+  <div class="contenedor">
+    <h2 id="t-maqueta" class="sr-only">${L("Maqueta interactiva del club", "Interactive model of the club")}</h2>
+    <div class="maqueta" data-maqueta>
+      <canvas tabindex="0" role="img" aria-label="${L("Maqueta 3D del Centro Deportivo Tenisur. Arrastra para girar, pellizca o usa los botones para acercar.", "3D model of Centro Deportivo Tenisur. Drag to rotate, pinch or use the buttons to zoom.")}"></canvas>
+      <div class="maqueta__etiquetas" data-etiquetas></div>
+      <div class="maqueta__ctrl">
+        <button type="button" aria-label="${L("Acercar", "Zoom in")}" data-zoom-mas>+</button>
+        <button type="button" aria-label="${L("Alejar", "Zoom out")}" data-zoom-menos>−</button>
+        <button type="button" aria-label="${L("Vista inicial", "Reset view")}" data-reiniciar>⟲</button>
+      </div>
+      <p class="maqueta__ayuda" aria-hidden="true">${L("Arrastra para girar · pellizca para acercar", "Drag to rotate · pinch to zoom")}</p>
+    </div>
+    <div class="maqueta__hora">
+      <label for="hora">${L("Hora del día", "Time of day")}: <strong data-hora-txt></strong></label>
+      <input type="range" id="hora" min="0" max="100" value="50" step="1">
+      <div class="maqueta__marcas" aria-hidden="true"><span>${L("Día", "Day")}</span><span>${L("Atardecer", "Sunset")}</span><span>${L("Noche", "Night")}</span></div>
+    </div>
+    <div class="maqueta__zonas" role="group" aria-label="${L("Ir a una zona", "Go to an area")}">
+      ${zonaBtn("tenis", L("Tenis", "Tennis"))}${zonaBtn("padel", L("Pádel", "Padel"))}${zonaBtn("squash", L("Squash", "Squash"))}${zonaBtn("gym", L("Gimnasio", "Gym"))}${zonaBtn("restaurante", L("Restaurante", "Restaurant"))}${zonaBtn("terraza", L("Terraza y kiosco", "Terrace and kiosk"))}${zonaBtn("parque", L("Parque infantil", "Playground"))}
+    </div>
+    <p class="maqueta__nota">${L("Recreación aproximada para orientarte por el club. La distribución real puede variar.", "Approximate model to help you find your way around. The real layout may differ.")}</p>
+  </div>
+</section>
+${bloqueReserva()}`,
+  });
+
   /* LEGALES */
   const legal = (ruta, h1, secciones) => {
     const mig = [{ name: h1 }];
@@ -825,6 +868,7 @@ writeFileSync(join(DIST, "404.html"), pagina({
 
 copyFileSync("src/styles.css", join(DIST, "styles.css"));
 copyFileSync("src/main.js", join(DIST, "main.js"));
+copyFileSync("src/maqueta.js", join(DIST, "maqueta.js"));
 cpSync("src/img", join(DIST, "img"), { recursive: true });
 writeFileSync(join(DIST, "favicon.svg"), `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="#ddf247"/><path d="M5 7c6 4 6 14 0 18M27 7c-6 4-6 14 0 18" fill="none" stroke="#0f5e52" stroke-width="2.4"/></svg>`);
 writeFileSync(join(DIST, "sitemap.xml"), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${todas.filter((t) => !t.noindex).map((t) => `  <url><loc>${SITE}${t.r}</loc></url>`).join("\n")}\n</urlset>\n`);

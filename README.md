@@ -14,6 +14,12 @@ Para editar textos, horarios o fotos: todo está en `build.mjs` (objetos `NEGOCI
 - Selector ES / EN en la cabecera, visible también en móvil. Cada página enlaza a su versión en el otro idioma y lleva `hreflang` para Google.
 - Los textos de cada idioma están juntos en `build.mjs` con la forma `L("español", "english")`.
 
+## Pistas en 4D
+- Página `/pistas-3d` (y `/en/pistas-3d`) con una maqueta 3D del club hecha a mano en `src/maqueta.js`, sin librerías.
+- Se gira con el dedo, se acerca pellizcando y tiene un control de hora del día (día, atardecer y noche con focos).
+- Es una recreación aproximada: la colocación de pistas y edificios es orientativa. Si el cliente quiere que coincida con la realidad, hace falta un plano o una foto aérea.
+- Botón «Ver las pistas en 4D» en la portada y en Instalaciones.
+
 ## Reservas (sin cambios)
 - Todos los botones «Reservar» siguen llevando a **https://tenisur.taykus.com/**, el mismo sistema que la web anterior. No se ha tocado Taykus.
 - Además, `/reservas` redirige a Taykus.
@@ -34,7 +40,7 @@ Redirecciones: `/escríbenos` → `/escribenos`, `/fotos/img/*` → `/galeria`, 
 9. Probar en un iPhone y un Android reales una vez publicada.
 
 ## Pruebas hechas
-- 38 páginas generadas (19 en español y 19 en inglés), revisadas en móvil (390 px) y escritorio (1366 px): sin errores de JavaScript, sin desplazamiento horizontal, un solo `h1` por página, todas las imágenes con `alt`, sin enlaces internos rotos.
+- 40 páginas generadas (20 en español y 20 en inglés), revisadas en móvil (390 px) y escritorio (1366 px): sin errores de JavaScript, sin desplazamiento horizontal, un solo `h1` por página, todas las imágenes con `alt`, sin enlaces internos rotos.
 - Menú móvil: abre, enfoca el botón de cerrar, se cierra con Escape.
 - Formulario: muestra errores si falta algo; con datos válidos abre `wa.me/34675021499` con el mensaje.
 - Las fotos, fuentes, mapa y Taykus no se pudieron cargar en el entorno de pruebas (sin acceso a esos dominios); hay que verlos en la URL de Vercel.
