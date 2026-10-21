@@ -14,11 +14,11 @@ Para editar textos, horarios o fotos: todo está en `build.mjs` (objetos `NEGOCI
 - Selector ES / EN en la cabecera, visible también en móvil. Cada página enlaza a su versión en el otro idioma y lleva `hreflang` para Google.
 - Los textos de cada idioma están juntos en `build.mjs` con la forma `L("español", "english")`.
 
-## Pistas en 4D
+## Pistas en 3D
 - Página `/pistas-3d` (y `/en/pistas-3d`) con una maqueta 3D del club hecha a mano en `src/maqueta.js`, sin librerías.
 - Se gira con el dedo, se acerca pellizcando y tiene un control de hora del día (día, atardecer y noche con focos).
 - Es una recreación aproximada: la colocación de pistas y edificios es orientativa. Si el cliente quiere que coincida con la realidad, hace falta un plano o una foto aérea.
-- Botón «Ver las pistas en 4D» en la portada y en Instalaciones.
+- Botón «Ver las pistas en 3D» en la portada y en Instalaciones.
 
 ## Reservas (sin cambios)
 - Todos los botones «Reservar» siguen llevando a **https://tenisur.taykus.com/**, el mismo sistema que la web anterior. No se ha tocado Taykus.

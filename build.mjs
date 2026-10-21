@@ -101,7 +101,7 @@ const NAV_MOVIL = () => [
     { href: "/producto/restaurante", txt: L("Restaurante", "Restaurant") },
     { href: "/producto/kiosco-y-barbacoa", txt: L("Kiosco y barbacoa", "Kiosk and barbecue") },
   ] },
-  { href: "/galeria", txt: L("Galería", "Gallery"), sub: [{ href: "/videos", txt: L("Vídeos", "Videos") }, { href: "/pistas-3d", txt: L("Pistas en 4D", "Courts in 4D") }] },
+  { href: "/galeria", txt: L("Galería", "Gallery"), sub: [{ href: "/videos", txt: L("Vídeos", "Videos") }, { href: "/pistas-3d", txt: L("Pistas en 3D", "Courts in 3D") }] },
   { href: "/saber-mas", txt: L("Conócenos", "About us") },
   { href: "/contacto", txt: L("Contacto", "Contact") },
 ];
@@ -390,7 +390,7 @@ function construir() {
     <div class="hero__acciones">
       <a class="btn btn--reserva btn--grande" ${extReserva}>${I.cal}${L("Reservar pista", "Book a court")}${nuevaPestana()}</a>
       <a class="btn btn--borde btn--grande" href="${NEGOCIO.telHref}">${I.tel}${L("Llamar", "Call")}</a>
-      <a class="btn btn--4d btn--grande" href="${u("/pistas-3d")}">${I.cubo}${L("Ver las pistas en 4D", "See the courts in 4D")}</a>
+      <a class="btn btn--3d btn--grande" href="${u("/pistas-3d")}">${I.cubo}${L("Ver las pistas en 3D", "See the courts in 3D")}</a>
     </div>
   </div>
 </section>
@@ -465,7 +465,7 @@ ${visita()}
     migas: migInst,
     cuerpo: `${cabPagina({ h1: L("Instalaciones deportivas", "Sports facilities"), sub: L("Unas instalaciones donde todo el mundo encuentra su manera de hacer deporte.", "Facilities where everyone finds their own way to play sport."), foto: IMG.instalaciones, migas: migInst })}
 <section class="seccion seccion--blanca"><div class="contenedor">
-  <p style="margin-bottom:28px"><a class="btn btn--pista btn--grande" href="${u("/pistas-3d")}">${I.cubo}${L("Ver las pistas en 4D", "See the courts in 4D")}</a></p>
+  <p style="margin-bottom:28px"><a class="btn btn--pista btn--grande" href="${u("/pistas-3d")}">${I.cubo}${L("Ver las pistas en 3D", "See the courts in 3D")}</a></p>
   ${deportes([IMG.tenis2, IMG.padel2, IMG.centro])}</div></section>
 <section class="seccion"><div class="contenedor">
   <div class="seccion__cab"><h2>${L("Entrenar fuera de la pista", "Training off the court")}</h2></div>
@@ -749,16 +749,16 @@ ${visita()}`,
   });
 
 
-  /* MAQUETA 3D / 4D */
-  const mig3d = [{ name: L("Instalaciones", "Facilities"), href: "/producto/instalaciones-deportivas" }, { name: L("Pistas en 4D", "Courts in 4D") }];
+  /* MAQUETA 3D */
+  const mig3d = [{ name: L("Instalaciones", "Facilities"), href: "/producto/instalaciones-deportivas" }, { name: L("Pistas en 3D", "Courts in 3D") }];
   const zonaBtn = (id, txt) => `<button class="btn btn--borde" type="button" data-zona="${id}">${txt}</button>`;
   P["/pistas-3d"] = pagina({
     ruta: "/pistas-3d",
-    titulo: L("Las pistas en 4D | Centro Deportivo Tenisur", "The courts in 4D | Centro Deportivo Tenisur"),
+    titulo: L("Las pistas en 3D | Centro Deportivo Tenisur", "The courts in 3D | Centro Deportivo Tenisur"),
     desc: L("Recorre en 3D las pistas de tenis, pádel y squash de Centro Deportivo Tenisur y cambia la hora del día: de día, al atardecer y de noche con los focos.", "Explore the Tenisur tennis, padel and squash courts in 3D and change the time of day: daytime, sunset and night with floodlights."),
     migas: mig3d,
     scripts: '<script src="/maqueta.js" defer></script>',
-    cuerpo: `${cabPagina({ h1: L("Las pistas en 4D", "The courts in 4D"), sub: L("Gira el club con el dedo y cambia la hora: la cuarta dimensión es el tiempo.", "Spin the club with your finger and change the hour: the fourth dimension is time."), migas: mig3d })}
+    cuerpo: `${cabPagina({ h1: L("Las pistas en 3D", "The courts in 3D"), sub: L("Gira el club con el dedo, acércate a cada zona y cambia la hora del día.", "Spin the club with your finger, zoom into each area and change the time of day."), migas: mig3d })}
 <section class="seccion seccion--oscura maqueta-sec" aria-labelledby="t-maqueta">
   <div class="contenedor">
     <h2 id="t-maqueta" class="sr-only">${L("Maqueta interactiva del club", "Interactive model of the club")}</h2>

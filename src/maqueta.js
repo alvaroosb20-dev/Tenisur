@@ -1,4 +1,4 @@
-/* Maqueta 3D/4D del Centro Deportivo Tenisur — sin dependencias (canvas 2D).
+/* Maqueta 3D del Centro Deportivo Tenisur — sin dependencias (canvas 2D).
    3 dimensiones de espacio + la hora del día (día · atardecer · noche).
    Recreación aproximada: la disposición es orientativa. */
 (function () {
@@ -183,7 +183,7 @@
     cam.dist = Math.max(18, Math.min(200, cam.dist));
   }
 
-  /* ---------- hora del día (4.ª dimensión) ---------- */
+  /* ---------- hora del día  ---------- */
   var CIELOS = [
     { arriba: hex("#7fb6e6"), abajo: hex("#d7ecf7"), luz: hex("#fff6e6"), amb: 0.62, dif: 0.48, suelo: 1, dir: norm([-0.5, 1, 0.35]) },
     { arriba: hex("#3a3f8f"), abajo: hex("#f39a5a"), luz: hex("#ffb27a"), amb: 0.45, dif: 0.55, suelo: 0.85, dir: norm([0.9, 0.35, -0.6]) },
