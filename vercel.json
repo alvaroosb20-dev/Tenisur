@@ -1,0 +1,27 @@
+{
+  "buildCommand": "node build.mjs",
+  "outputDirectory": "dist",
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "redirects": [
+    { "source": "/escr%C3%ADbenos", "destination": "/escribenos", "permanent": true },
+    { "source": "/escríbenos", "destination": "/escribenos", "permanent": true },
+    { "source": "/fotos/img/:id", "destination": "/galeria", "permanent": true },
+    { "source": "/noticias", "destination": "/saber-mas", "permanent": false },
+    { "source": "/blog", "destination": "/saber-mas", "permanent": false },
+    { "source": "/blog/:slug*", "destination": "/saber-mas", "permanent": false },
+    { "source": "/conocenos/tour", "destination": "/galeria", "permanent": false },
+    { "source": "/reservas", "destination": "https://tenisur.taykus.com/", "permanent": false }
+  ],
+  "headers": [
+    { "source": "/(.*)", "headers": [
+      { "key": "X-Content-Type-Options", "value": "nosniff" },
+      { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
+      { "key": "X-Frame-Options", "value": "SAMEORIGIN" },
+      { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=()" }
+    ] },
+    { "source": "/(styles.css|main.js|favicon.svg)", "headers": [
+      { "key": "Cache-Control", "value": "public, max-age=86400, must-revalidate" }
+    ] }
+  ]
+}
