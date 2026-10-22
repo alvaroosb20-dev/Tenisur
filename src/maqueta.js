@@ -186,10 +186,10 @@
   var redTenis = [742, 722, 706];
   plotsTenis.forEach(function (pl, i) {
     var x0 = X(pl[0]), x1 = X(pl[1]), z0 = Z(458), z1 = Z(972), cx = (x0 + x1) / 2, cz = Z(redTenis[i]);
-    plano(x0, z0, x1, z1, i === 1 ? "#c39a78" : "#c07a58", -1);
-    plano(cx - 6.5, cz - 14.5, cx + 6.5, cz - 10.5, "#cf9474", 0);
-    plano(cx - 6.5, cz + 10.5, cx + 6.5, cz + 14.5, "#cf9474", 0);
-    plano(cx - 5.49, cz - 11.885, cx + 5.49, cz + 11.885, i === 1 ? "#bb6f4f" : "#b5603f", 1);
+    plano(x0, z0, x1, z1, "#2f6a45", -1);
+    plano(cx - 6.5, cz - 14.5, cx + 6.5, cz - 10.5, "#3a7a50", 0);
+    plano(cx - 6.5, cz + 10.5, cx + 6.5, cz + 14.5, "#3a7a50", 0);
+    plano(cx - 5.49, cz - 11.885, cx + 5.49, cz + 11.885, "#3f8a58", 1);
     var L = 11.885, Dd = 5.485, Ds = 4.115, S = 6.4, w = 0.09;
     linea(cx - Dd, cz - L, cx + Dd, cz - L, w); linea(cx - Dd, cz + L, cx + Dd, cz + L, w);
     linea(cx - Dd, cz - L, cx - Dd, cz + L, w); linea(cx + Dd, cz - L, cx + Dd, cz + L, w);
